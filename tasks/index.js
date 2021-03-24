@@ -1,5 +1,33 @@
 function serialize(value) { 
     const serialized = {type: '', resultValue: ''}
+
+    const iterArray = function (elem, result) {
+        if (typeof(elem) != "object") {
+            result.push(elem)
+        } else if (Array.isArray(elem)) {
+            result.push('Array('+elem+')')
+        } else {
+            let itemArr = []
+            for (key in elem) {
+                itemArr.push(key+'='+elem[key])
+            }
+            result.push('Object('+itemArr.join(', ')+')')
+        }
+    }
+    
+    const iterObj = function(elem, result) {
+        if (typeof(elem) != "object") {
+            result.push(key+'='+elem)
+        } else if (Array.isArray(elem)) {
+            result.push(key+'=Array('+elem+')')
+        } else {
+            let itemArr = []
+            for (newKey in elem) {
+                itemArr.push(newKey+'='+elem[newKey])
+            }
+            result.push(key+'=Object('+itemArr.join(', ')+')')
+        }
+    }
     
     if (typeof(value) != "object") {
         serialized.type = typeof(value)  
@@ -8,30 +36,14 @@ function serialize(value) {
         serialized.type = 'Array' 
         let valueArr = []
         value.forEach( (item) => {
-            if (typeof(item) != "object") {
-                valueArr.push(item)
-            } else if (Array.isArray(item)) {
-                valueArr.push('Array('+item+')')
-            } else {
-                let itemArr = []
-                for (key in item) {
-                    itemArr.push(key+'='+item[key])
-                }
-                valueArr.push('Object('+itemArr.join(', ')+')')
-            }
+            iterArray(item, valueArr)
         } )
         serialized.resultValue = valueArr.join(', ')           
     } else {
         serialized.type = 'Object'
         let valueArr = []
         for (key in value) {
-            if (typeof(value[key]) != "object") {
-                valueArr.push(key+'='+value[key])
-            } else if (Array.isArray(value[key])) {
-                valueArr.push(key+'=Array('+value[key]+')')
-            } else {
-                valueArr.push('Object('+value[key])
-            }
+            iterObj(value[key], valueArr)
         }
         serialized.resultValue = valueArr.join(', ')
     }
@@ -39,9 +51,8 @@ function serialize(value) {
     console.log(`${serialized.type} (${serialized.resultValue})`)
 }
 
-//valueArr.push(serialize(value[key]))
 
 serialize (1)
 serialize ([1, 2, 3])
 serialize ( [1, 2, {a: 3, b: 4}, [5, 6]] )
-serialize ( {a: 1, b: 2, c: [5, 6]} )
+serialize ( {a: 1, b: 2, c: [5, 6], d: {a: 3, b: 4}} )
