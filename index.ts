@@ -1,4 +1,4 @@
-type myObject = {[key: string] : any}
+type myObject = { [key in string | number]: any }
 
 function serialize(value: number | string | myObject, level: number) {
     let serialized =''
