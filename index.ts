@@ -42,7 +42,7 @@ export default function serialize(value: number | string | myObject, level: numb
 }
 
 
-console.log (serialize (1, 1))
+/*console.log (serialize (1, 1))
 
 console.log (serialize ([1, 2, 3], 1))
 
@@ -50,4 +50,4 @@ console.log (serialize ( [1, 2, {a: 3, b: 4}, [5, 6]], 2 ))
 
 console.log (serialize ( {a: 1, b: 2, c: [5, {d:7, e:12}], d: {a: 3, b: 4}}, 2 ))
 
-console.log (serialize ( {a: 1, b: 2, c: [5, {d:7, e:12}], d: {a: 3, b: 4}}, 3 ))
+console.log (serialize ( {a: 1, b: 2, c: [5, {d:7, e:12}], d: {a: 3, b: 4}}, 3 ))*/
